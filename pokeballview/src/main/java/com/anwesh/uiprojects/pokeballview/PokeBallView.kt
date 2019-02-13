@@ -209,4 +209,13 @@ class PokeBallView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    companion object {
+
+        fun create(activity : Activity) : PokeBallView {
+            val view : PokeBallView = PokeBallView(activity)
+            activity.setContentView(view)
+            return view 
+        }
+    }
 }

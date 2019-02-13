@@ -22,6 +22,7 @@ val scGap : Float = 0.05f
 val scDiv : Double = 0.51
 val sizeFactor : Float = 2.8f
 val strokeFactor : Int = 50
+val delay : Long = 25
 
 fun Int.inverse() : Float = 1f / this
 fun Float.maxScale(i : Int, n : Int) : Float = Math.max(0f, this - i * n.inverse())
@@ -39,7 +40,7 @@ fun Canvas.drawPokeBall(i : Int, scale : Float, paint : Paint) {
     val sc2 : Float = scale.divideScale(1, 2)
     save()
     translate(w / 2, gap * (i + 1))
-    rotate(90f * sc2)
+    rotate(90f * (1 - sc2))
     paint.color = half2Color
     drawArc(RectF(-size, -size, size, size), 0f, 180f, true, paint)
     paint.color = half1Color
@@ -98,7 +99,7 @@ class PokeBallView(ctx : Context) : View(ctx) {
             if (animated) {
                 cb()
                 try {
-                    Thread.sleep(50)
+                    Thread.sleep(delay)
                     view.invalidate()
                 } catch(ex : Exception) {
 
@@ -215,7 +216,7 @@ class PokeBallView(ctx : Context) : View(ctx) {
         fun create(activity : Activity) : PokeBallView {
             val view : PokeBallView = PokeBallView(activity)
             activity.setContentView(view)
-            return view 
+            return view
         }
     }
 }

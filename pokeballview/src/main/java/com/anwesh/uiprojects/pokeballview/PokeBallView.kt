@@ -185,6 +185,27 @@ class PokeBallView(ctx : Context) : View(ctx) {
         fun startUpdating(cb : () -> Unit) {
             curr.startUpdating(cb)
         }
-        
+    }
+
+    data class Renderer(var view : PokeBallView) {
+
+        private val animator : Animator = Animator(view)
+        private val pb : PokeBall = PokeBall(0)
+
+        fun render(canvas : Canvas, paint : Paint) {
+            canvas.drawColor(backColor)
+            pb.draw(canvas, paint)
+            animator.animate {
+                pb.update {i, scl ->
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            pb.startUpdating {
+                animator.start()
+            }
+        }
     }
 }
